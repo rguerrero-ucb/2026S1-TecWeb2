@@ -1,0 +1,62 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formularios</title>
+</head>
+
+<body>
+    <form action="guardar.php" method="get">
+        <br>
+
+        <label>Nombre</label>
+        <input type="text" name="nombre" value="" />
+        <br>
+
+        <fieldset>
+            <legend>EDAD</legend>
+            <label>Edad</label>
+            <input type="text" name="edad" value="0" />
+        </fieldset>
+        <br>
+
+        <select name="pais">
+            <option value="064">Argentina</option>
+            <option value="591">Bolivia</option>
+            <option value="050">Chile</option>
+        </select>
+        <br>
+        <input type="checkbox" name="terminos" value="1" /> Acepto los términos y condiciones
+        <br>
+
+        <br>
+
+        <input type="radio" name="diasemana" value="lun" /> Lunes
+        <input type="radio" name="diasemana" value="mar" /> Martes
+        <input type="radio" name="diasemana" value="mie" /> Miércoles
+        <input type="radio" name="diasemana" value="jue" /> Jueves
+        <input type="radio" name="diasemana" value="vie" /> Viernes
+        <input type="radio" name="diasemana" value="sab" /> Sábado
+        <input type="radio" name="diasemana" value="dom" /> Domingo
+        <br>
+
+        <input type="radio" name="genero" value="masc" /> Masculino
+        <input type="radio" name="genero" value="fem" /> Femenino
+
+        <br>
+
+        <textarea name="comentarios" rows="5" cols="30"></textarea>
+
+        <br>
+
+        <button type="reset">Limpiar</button>
+        <button type="submit">Enviar</button>
+
+    </form>
+
+
+</body>
+
+</html>
