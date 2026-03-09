@@ -1,0 +1,34 @@
+#bloque1 {
+    background-color: #e6e26e;
+    padding: 30px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    width: 100px;
+    display:inline-block;
+    float: left;
+}
+
+#bloque2 {
+    background-color: #71f285;
+    padding: 30px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    width: 100px;
+    display:inline-block;
+    float: right;
+    border: 3px dotted red;
+}
+
+#bloque3 {
+    background-color: #f68798;
+    padding: 30px;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    width: 100px;
+    display:inline-block;
+}
+
+#grupo1 {
+    background-color:silver;
+    height: 150px;
+}

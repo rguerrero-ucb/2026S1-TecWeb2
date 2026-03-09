@@ -1,0 +1,13 @@
+p {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+#superior {
+    font-size: small;
+    background-color: bisque;
+}
+
+.grande {
+    font-size: 30px;
+    color: silver;
+}
