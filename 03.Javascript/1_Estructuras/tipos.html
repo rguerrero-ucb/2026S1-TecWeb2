@@ -1,0 +1,50 @@
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tipos de Datos</title>
+
+    <script>
+        let numero = 10;
+        let texto = "Hola Mundo";
+        let booleano = true;
+        let nulo = null;
+        let indefinido;
+
+        console.log(typeof numero);
+        console.log(typeof texto);
+        console.log(typeof booleano);
+        console.log(typeof nulo);
+        console.log(typeof indefinido);
+
+        let textoLargo = `El
+        número es ${numero}
+        sdfasdfas
+        asd
+        fasd
+        fsad
+        fasdf
+        `;
+        console.log(textoLargo);
+
+        let objeto = {
+            nombre: "Juan",
+            edad: 30,
+            ciudad: "Madrid"
+        };
+
+        console.log(objeto);
+        console.log(objeto.nombre);
+        console.log(objeto["edad"]);
+        console.log(objeto["ciudad"]);
+
+        for(let clave in objeto) {
+            console.log(clave);
+            console.log(objeto[clave]);
+        }
+    </script>
+</head>
+<body>
+</body>
+</html>
