@@ -1,0 +1,23 @@
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM - Document Object Model</title>
+    <script src="calculadora.js"></script>
+</head>
+<body>
+    <h1>Calculadora</h1>
+    <input type="text" id="operando1" placeholder="Operando 1" value="3">
+    <br>
+    <input type="text" id="operando2" placeholder="Operando 2" value="4">
+    <br>
+    <input type="radio" name="operador" value="+" checked> Sumar
+    <input type="radio" name="operador" value="-"> Restar
+    <input type="radio" name="operador" value="*"> Multiplicar
+    <input type="radio" name="operador" value="/"> Dividir
+    <br>
+    <button id="calcular" onclick="calcular()">Calcular</button>
+    <h2 id="resultado">Resultado: </h2>
+
+</body>
+</html>
