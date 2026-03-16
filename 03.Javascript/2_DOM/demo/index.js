@@ -1,7 +1,17 @@
-// 1. Selección de elementos (Traer el HTML al mundo JS)
+// 1. Selección de elementos
 const objetivo = document.getElementById('objetivo');
 const marcador = document.getElementById('marcador');
-let puntos = 0;
+localStorage.setItem('puntos', 0)
+
+let persona =  {
+    nombre: 'Ronal',
+    edad: 25,
+    profesion: 'Desarrollador'
+}
+
+localStorage.setItem('persona', JSON.stringify(persona))
+
+persona = JSON.parse(localStorage.getItem('persona'))
 
 // 2. Definir la lógica de movimiento
 function moverObjetivo() {
@@ -18,8 +28,10 @@ function moverObjetivo() {
 }
 
 // 3. El Evento (La escucha de la acción del usuario)
-objetivo.addEventListener('click', () => {
+objetivo.addEventListener('mouseover', () => {
+    let puntos = parseInt(localStorage.getItem('puntos')) || 0; // Obtener puntos actuales
     puntos++;
+    localStorage.setItem('puntos', puntos); // Guardar puntos en localStorage
     marcador.innerText = puntos; // Actualizar el texto en el HTML
     moverObjetivo();
 });
