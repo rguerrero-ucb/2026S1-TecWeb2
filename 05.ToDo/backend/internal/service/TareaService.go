@@ -15,6 +15,7 @@ func (s *TareaService) GetAllTareas() ([]Tarea, error) {
 }
 
 func (s *TareaService) CreateTarea(nombre string) (Tarea, error) {
+	slog.Debug("Creando tarea en service", "Nombre", nombre)
 	ID, err := s.tareaRepository.NextIdentity()
 	if err != nil {
 		return Tarea{}, err
@@ -25,7 +26,11 @@ func (s *TareaService) CreateTarea(nombre string) (Tarea, error) {
 		Estado: 0,
 	}
 	slog.Debug("Guardando tarea en service", "Tarea", tarea)
-	s.tareaRepository.Create(tarea)
+	err = s.tareaRepository.Create(tarea)
+	if err != nil {
+		return Tarea{}, err
+	}
+	slog.Debug("Tarea creada en service", "Tarea", tarea)
 	return tarea, nil
 }
 

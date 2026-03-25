@@ -44,7 +44,7 @@ func (r *TareaRepositoryImpl) NextIdentity() (int, error) {
 
 func (r *TareaRepositoryImpl) Create(tarea service.Tarea) error {
 	slog.Debug("Guardando tarea en repository", "Tarea", tarea)
-	_, err := r.Db.Exec("INSERT INTO todo.tareas (id, nombre, estado) VALUES (?, ?, ?)",
+	_, err := r.Db.Exec("INSERT INTO todo.tareas (id, nombre, estado) VALUES ($1, $2, $3)",
 		tarea.ID,
 		tarea.Nombre,
 		tarea.Estado,
@@ -56,6 +56,6 @@ func (r *TareaRepositoryImpl) Create(tarea service.Tarea) error {
 }
 
 func (r *TareaRepositoryImpl) Delete(id int) error {
-	_, err := r.Db.Exec("DELETE FROM todo.tareas WHERE id = ?", id)
+	_, err := r.Db.Exec("DELETE FROM todo.tareas WHERE id = $1", id)
 	return err
 }

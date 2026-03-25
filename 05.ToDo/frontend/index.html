@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo - Gestor de Tareas</title>
+</head>
+<body>
+    <h1>Gestor de Tareas</h1>
+    
+    <div>
+        <input type="text" id="nombre-tarea" placeholder="Nombre de la tarea">
+        <button onclick="agregarTarea()">Agregar Tarea</button>
+    </div>
+    
+    <h2>Tareas</h2>
+    <ul id="lista-tareas">
+        <li>Cargando...</li>
+    </ul>
+
+    <script>
+        const API_URL = 'http://localhost:8080/tareas';
+
+        // Cargar tareas cuando la página se cargue
+        document.addEventListener('DOMContentLoaded', () => {
+            cargarTareas();
+        });
+
+        // Función para cargar tareas desde el servidor
+        async function cargarTareas() {
+            try {
+                const respuesta = await fetch(API_URL);
+                const datos = await respuesta.json();
+
+                if (datos.success && Array.isArray(datos.tareas)) {
+                    mostrarTareas(datos.tareas);
+                } else {
+                    mostrarError('Error en la respuesta del servidor');
+                }
+            } catch (error) {
+                mostrarError('Error al conectar con el servidor');
+                console.error(error);
+            }
+        }
+
+        // Función para mostrar las tareas en la lista
+        function mostrarTareas(tareas) {
+            const listaTareas = document.getElementById('lista-tareas');
+            
+            if (tareas.length === 0) {
+                listaTareas.innerHTML = '<li>No hay tareas</li>';
+                return;
+            }
+
+            listaTareas.innerHTML = tareas.map(tarea => `
+                <li>
+                    ${tarea.nombre} (ID: ${tarea.id}) - Estado: ${tarea.estado}
+                    <button onclick="eliminarTarea(${tarea.id})">Eliminar</button>
+                </li>
+            `).join('');
+        }
+
+        // Función para mostrar errores
+        function mostrarError(mensaje) {
+            const listaTareas = document.getElementById('lista-tareas');
+            listaTareas.innerHTML = `<li>${mensaje}</li>`;
+        }
+
+        // Función para agregar una nueva tarea
+        async function agregarTarea() {
+            const inputNombre = document.getElementById('nombre-tarea');
+            const nombre = inputNombre.value.trim();
+
+            if (!nombre) {
+                alert('Por favor ingresa un nombre para la tarea');
+                return;
+            }
+
+            try {
+                const respuesta = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ nombre, estado: 0 })
+                });
+
+                if (respuesta.ok) {
+                    inputNombre.value = '';
+                    cargarTareas();
+                } else {
+                    alert('Error al crear la tarea');
+                }
+            } catch (error) {
+                alert('Error al conectar con el servidor');
+                console.error(error);
+            }
+        }
+
+        // Función para eliminar una tarea
+        async function eliminarTarea(id) {
+            if (!confirm('¿Estás seguro que quieres eliminar esta tarea?')) {
+                return;
+            }
+
+            try {
+                const respuesta = await fetch(`${API_URL}/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (respuesta.ok) {
+                    cargarTareas();
+                } else {
+                    alert('Error al eliminar la tarea');
+                }
+            } catch (error) {
+                alert('Error al conectar con el servidor');
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+</html>
