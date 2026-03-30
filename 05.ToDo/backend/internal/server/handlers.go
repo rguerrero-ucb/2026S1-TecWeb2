@@ -56,6 +56,7 @@ func (h *Handler) getAllTareas(w http.ResponseWriter, r *http.Request) {
 
 // createTarea crea una nueva tarea
 func (h *Handler) createTarea(w http.ResponseWriter, r *http.Request) {
+
 	var req struct {
 		Nombre string `json:"nombre"`
 		Estado int    `json:"estado"`

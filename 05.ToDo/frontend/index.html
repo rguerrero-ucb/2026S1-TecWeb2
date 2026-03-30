@@ -9,9 +9,9 @@
     <h1>Gestor de Tareas</h1>
     
     <div>
-        <input type="text" id="nombre-tarea" placeholder="Nombre de la tarea">
-        <button onclick="agregarTarea()">Agregar Tarea</button>
-    </div>
+            <input type="text" id="nombre-tarea" placeholder="Nombre de la tarea">
+            <button onclick="agregarTarea()">Agregar Tarea</button>
+        </div>
     
     <h2>Tareas</h2>
     <ul id="lista-tareas">
@@ -31,7 +31,8 @@
             try {
                 const respuesta = await fetch(API_URL, {
                     headers: {
-                        'ngrok-skip-browser-warning': '1'
+                        'ngrok-skip-browser-warning': '1',
+                        credentials: 'include'
                     }
                 });
                 const datos = await respuesta.json();
