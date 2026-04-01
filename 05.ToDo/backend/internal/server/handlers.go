@@ -22,9 +22,22 @@ func NewHandler(tareaService *service.TareaService) *Handler {
 	}
 }
 
-// HomeHandler maneja las solicitudes al endpoint raíz
+// HomeHandler maneja las solicitudes al endpoint raíz y valida rutas no encontradas
 func (h *Handler) HomeHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "¡Hola, mundo!")
+	// Si la ruta no es exactamente "/", devolver 404
+	if r.URL.Path != "/" {
+		SendResponse(w, map[string]any{
+			"success": false,
+			"error":   fmt.Sprintf("Ruta no encontrada: %s", r.URL.Path),
+		})
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
+	SendResponse(w, map[string]any{
+		"success": true,
+		"message": "API de Tareas - Endpoints disponibles: GET /tareas, POST /tareas/create, DELETE /tareas/delete/{id}",
+	})
 }
 
 // GetAllTareas obtiene todas las tareas
@@ -44,6 +57,14 @@ func (h *Handler) GetAllTareasHandler(w http.ResponseWriter, r *http.Request) {
 
 // CreateTarea crea una nueva tarea
 func (h *Handler) CreateTareaHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		SendResponse(w, map[string]any{
+			"success": false,
+			"error":   "El método debe ser POST",
+		})
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		return
+	}
 
 	var req struct {
 		Nombre string `json:"nombre"`
@@ -84,9 +105,9 @@ func (h *Handler) CreateTareaHandler(w http.ResponseWriter, r *http.Request) {
 func (h *Handler) DeleteTareaHandler(w http.ResponseWriter, r *http.Request) {
 	slog.Info("DeleteTareaHandler llamado", "method", r.Method, "url", r.URL.Path)
 
-	// Extraer el ID de la URL (formato: /tareas/{id})
-	parts := strings.Split(strings.TrimPrefix(r.URL.Path, "/tareas"), "/")
-	if len(parts) < 2 || parts[1] == "" {
+	// Extraer el ID de la URL (formato: /tareas/delete/{id})
+	parts := strings.Split(strings.TrimPrefix(r.URL.Path, "/tareas/delete/"), "/")
+	if len(parts) < 1 || parts[0] == "" {
 		SendResponse(w, map[string]any{
 			"success": false,
 			"error":   "El 'id' es requerido en la URL",
@@ -94,7 +115,7 @@ func (h *Handler) DeleteTareaHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	id, err := strconv.Atoi(parts[1])
+	id, err := strconv.Atoi(parts[0])
 	if err != nil {
 		SendResponse(w, map[string]any{
 			"success": false,

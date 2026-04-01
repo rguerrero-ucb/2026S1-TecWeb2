@@ -61,7 +61,7 @@ func Run() {
 	mux.HandleFunc("/", handler.HomeHandler)
 	mux.HandleFunc("/tareas", handler.GetAllTareasHandler)
 	mux.HandleFunc("/tareas/create", handler.CreateTareaHandler)
-	mux.HandleFunc("/tareas/delete", handler.DeleteTareaHandler)
+	mux.HandleFunc("/tareas/delete/", handler.DeleteTareaHandler)
 
 	// Aplicar middleware CORS
 	corsHandler := CORSMiddleware(mux)

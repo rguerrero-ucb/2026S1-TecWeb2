@@ -92,11 +92,12 @@
                     body: JSON.stringify({ nombre, estado: 0 })
                 });
 
-                if (respuesta.ok) {
+                const datos = await respuesta.json();
+                if (respuesta.ok && datos.success) {
                     inputNombre.value = '';
                     cargarTareas();
                 } else {
-                    alert('Error al crear la tarea');
+                    alert(`Error al crear la tarea: ${datos.error || 'Error desconocido'}`);
                 }
             } catch (error) {
                 alert('Error al conectar con el servidor');
@@ -118,10 +119,15 @@
                     }
                 });
 
-                if (respuesta.ok) {
+                // Leer el contenido del body
+                const datos = await respuesta.json();
+                console.log(`Respuesta al eliminar tarea con ID ${id}:`, datos);
+
+                if (respuesta.ok && datos.success) {
+                    console.log(`Tarea con ID ${id} eliminada exitosamente`);
                     cargarTareas();
                 } else {
-                    alert('Error al eliminar la tarea');
+                    alert(`Error al eliminar la tarea: ${datos.message || 'Error desconocido'}`);
                 }
             } catch (error) {
                 alert('Error al conectar con el servidor');
