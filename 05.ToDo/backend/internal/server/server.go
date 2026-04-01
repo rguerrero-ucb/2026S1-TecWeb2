@@ -59,8 +59,7 @@ func Run() {
 	// Registrando rutas
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", handler.HomeHandler)
-	mux.HandleFunc("/tareas", handler.TareasHandler)
-	// Mantener rutas antiguas para compatibilidad
+	mux.HandleFunc("/tareas", handler.GetAllTareasHandler)
 	mux.HandleFunc("/tareas/create", handler.CreateTareaHandler)
 	mux.HandleFunc("/tareas/delete", handler.DeleteTareaHandler)
 

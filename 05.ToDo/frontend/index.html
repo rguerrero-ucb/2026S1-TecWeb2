@@ -111,8 +111,8 @@
             }
 
             try {
-                const respuesta = await fetch(`${API_URL}/delete/${id}`, {
-                    method: 'DELETE',
+                const respuesta = await fetch(`${API_URL}/tareas/delete/${id}`, {
+                    method: 'POST',
                     headers: {
                         'ngrok-skip-browser-warning': '1'
                     }
