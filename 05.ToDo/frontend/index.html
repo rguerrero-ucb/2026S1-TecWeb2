@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo - Gestor de Tareas</title>
 </head>
+
 <body>
     <h1>Gestor de Tareas</h1>
-    
+
     <div>
-            <input type="text" id="nombre-tarea" placeholder="Nombre de la tarea">
-            <button onclick="agregarTarea()">Agregar Tarea</button>
-        </div>
-    
+        <input type="text" id="nombre-tarea" placeholder="Nombre de la tarea">
+        <button onclick="agregarTarea()">Agregar Tarea</button>
+    </div>
+
     <h2>Tareas</h2>
     <ul id="lista-tareas">
         <li>Cargando...</li>
     </ul>
 
     <script>
-        const API_URL = 'https://fiercely-ungrimed-alexander.ngrok-free.dev/tareas';
+        //const API_URL = 'localhost:8080';
+        const API_URL = 'https://fiercely-ungrimed-alexander.ngrok-free.dev';
 
         // Cargar tareas cuando la página se cargue
         document.addEventListener('DOMContentLoaded', () => {
@@ -29,11 +32,10 @@
         // Función para cargar tareas desde el servidor
         async function cargarTareas() {
             try {
-                const respuesta = await fetch(API_URL, {
+                const respuesta = await fetch(API_URL + '/tareas', {
                     headers: {
-                        'ngrok-skip-browser-warning': '1',
-                        credentials: 'include'
-                    }
+                        'ngrok-skip-browser-warning': '1'
+                    },
                 });
                 const datos = await respuesta.json();
 
@@ -43,7 +45,6 @@
                     mostrarError('Error en la respuesta del servidor');
                 }
             } catch (error) {
-                mostrarError('Error al conectar con el servidor');
                 console.error(error);
             }
         }
@@ -51,7 +52,7 @@
         // Función para mostrar las tareas en la lista
         function mostrarTareas(tareas) {
             const listaTareas = document.getElementById('lista-tareas');
-            
+
             if (tareas.length === 0) {
                 listaTareas.innerHTML = '<li>No hay tareas</li>';
                 return;
@@ -82,7 +83,7 @@
             }
 
             try {
-                const respuesta = await fetch(API_URL, {
+                const respuesta = await fetch(`${API_URL}/tareas/create`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -110,7 +111,7 @@
             }
 
             try {
-                const respuesta = await fetch(`${API_URL}/${id}`, {
+                const respuesta = await fetch(`${API_URL}/delete/${id}`, {
                     method: 'DELETE',
                     headers: {
                         'ngrok-skip-browser-warning': '1'
@@ -129,4 +130,5 @@
         }
     </script>
 </body>
+
 </html>
